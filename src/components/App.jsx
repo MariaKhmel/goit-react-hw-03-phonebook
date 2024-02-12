@@ -4,12 +4,32 @@ import {ContactsList} from './ContactsList/ContactsList'
 import {Filter} from './Filter/Filter'
 import { nanoid } from 'nanoid';
 
+const LS_CONTACTSLIST_KEY = 'contactsList'
+
 export class App extends Component {
 
 state = {
 contacts: [],
 filter: '',
+  }
+  
+  componentDidMount() {
+    const existingContactList = localStorage.getItem(LS_CONTACTSLIST_KEY);
+    const parsedContactList = JSON.parse(existingContactList);
+   
+    if (parsedContactList.length>=1) {
+      this.setState({contacts : parsedContactList})
+    }
+   
 }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      const stringifiedContacts = JSON.stringify(this.state.contacts)
+     localStorage.setItem(LS_CONTACTSLIST_KEY, stringifiedContacts)
+    }
+  }
 
 handleFormChange = (data) => {
     const newContact = {
