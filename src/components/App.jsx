@@ -17,8 +17,9 @@ filter: '',
     const existingContactList = localStorage.getItem(LS_CONTACTSLIST_KEY);
     const parsedContactList = JSON.parse(existingContactList);
    
-    if (parsedContactList.length>=1) {
-      this.setState({contacts : parsedContactList})
+    if (parsedContactList && parsedContactList.length>=1) {
+      this.setState({ contacts: parsedContactList })
+      
     }
    
 }
